@@ -1,9 +1,39 @@
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Xjera Blog | <%= title %></title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/styles.css">
-</head>
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/header.ejs') %>
+<body>
+  <%- include('./partials/nav.ejs') %>
+  <div class="details content">
+    <% if (blog.imageUrl) { %>
+        <img src="<%= blog.imageUrl %>" alt="<%= blog.title %>" class="details-image">
+    <% } %>
+    <h2 class="details-title"><%= blog.title %></h2>
+    <div class="meta">
+        <span>By: <%= blog.author %></span> | <span><%= blog.createdAt.toLocaleDateString() %></span>
+    </div>
+    <div class="post-body">
+      <p><%= blog.body.replace(/\n/g, '<br>') %></p>
+    </div>
+    <div class="actions">
+        <a class="btn btn-edit" href="/blogs/<%= blog._id %>/edit">Edit</a>
+        <a class="btn btn-delete" data-doc="<%= blog._id %>">Delete</a>
+    </div>
+  </div>
+  <%- include('./partials/footer.ejs') %>
+
+  <script>
+    const trashcan = document.querySelector('a.btn-delete');
+    if (trashcan) {
+      trashcan.addEventListener('click', (e) => {
+        const endpoint = `/blogs/${trashcan.dataset.doc}`;
+        fetch(endpoint, {
+          method: 'DELETE',
+        })
+        .then(response => response.json())
+        .then(data => window.location.href = data.redirect)
+        .catch(err => console.log(err));
+      });
+    }
+  </script>
+</body>
+</html>
