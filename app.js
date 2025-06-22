@@ -1,20 +1,22 @@
-
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const blogRoutes = require('./routes/blog');
-const expressLayouts = require('express-ejs-layouts'); // ✅ 新增
+const expressLayouts = require('express-ejs-layouts');
 
 const app = express();
 
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+}).then(() => {
+  console.log('✅ Connected to MongoDB');
+}).catch(err => {
+  console.error('❌ MongoDB connection error:', err);
 });
 
-// ✅ 设置布局中间件
 app.use(expressLayouts);
-app.set('layout', 'layout'); // 默认布局文件名（layout.ejs）
+app.set('layout', 'layout');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
