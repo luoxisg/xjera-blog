@@ -1,3 +1,4 @@
+
 /* General Setup */
 :root {
   --primary-blue: #27296A;
@@ -110,15 +111,30 @@ nav li {
     background: #fff;
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    padding: 25px;
     text-decoration: none;
     display: flex;
     flex-direction: column;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden; /* Ensure image corners are rounded */
 }
 .blog-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+.card-image-wrapper {
+    height: 200px;
+    background-color: var(--light-gray);
+}
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cover the area without distortion */
+}
+.card-content {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 .blog-card .title {
     font-size: 1.4em;
@@ -158,6 +174,13 @@ nav li {
 }
 
 /* Details Page */
+.details-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
 .details-title {
     font-size: 2.8em;
     margin-bottom: 10px;
@@ -204,6 +227,7 @@ nav li {
   font-size: 1em;
   font-weight: bold;
   transition: background-color 0.2s ease;
+  display: inline-block; /* Fix for button alignment */
 }
 .btn:hover {
     background-color: var(--primary-gold);
