@@ -55,7 +55,7 @@ const seedBlogs = [
   }
 ];
 
-const dbURI = process.env.MONGO_URI;
+const dbURI = process.env.MONGODB_URI;
 
 mongoose.connect(dbURI)
   .then(async () => {
