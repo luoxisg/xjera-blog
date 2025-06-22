@@ -4,22 +4,38 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const blogRoutes = require('./routes/blogRoutes');
 
+// Create Express app
 const app = express();
-const dbURI = process.env.MONGODB_URI;
+
+// Connect to MongoDB
+const dbURI = process.env.MONGO_URI;
 mongoose.connect(dbURI)
-  .then(() => {
+  .then((result) => {
+    // Listen for requests after db connection is complete
     const port = process.env.PORT || 3000;
     app.listen(port, () => {
-      console.log(`数据库连接成功，服务器正在监听端口 ${port}`);
+      console.log(`Database connected. Server is listening on port ${port}`);
     });
   })
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
 
+// Set view engine to EJS
 app.set('view engine', 'ejs');
+
+// Middleware & static files
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
-app.get('/', (req, res) => res.redirect('/blogs'));
+// Routes
+app.get('/', (req, res) => {
+  res.redirect('/blogs');
+});
+
+// Blog routes
 app.use('/blogs', blogRoutes);
-app.use((req, res) => res.status(404).render('404', { title: '404 - 页面未找到' }));
+
+// 404 page
+app.use((req, res) => {
+  res.status(404).render('404', { title: '404 - Page Not Found' });
+});
