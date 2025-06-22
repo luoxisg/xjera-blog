@@ -1,11 +1,9 @@
-<% layout('layout') %>
 <h1>Blog Posts</h1>
 <a href="/new" class="btn btn-outline-dark mb-3">+ New Post</a>
 <ul class="list-group">
   <% posts.forEach(post => { %>
     <li class="list-group-item">
-      <a href="/post/<%= post._id %>"><strong><%= post.title %></strong></a><br>
-      <small><%= post.createdAt.toLocaleString() %></small>
+      <a href="/post/<%= post._id %>"><%= post.title %></a>
     </li>
   <% }) %>
 </ul>
