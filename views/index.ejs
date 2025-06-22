@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <%- include('./partials/header.ejs') %>
@@ -14,12 +15,19 @@
       <div class="blogs-grid">
         <% blogs.forEach(blog => { %>
           <a class="blog-card" href="/blogs/<%= blog._id %>">
-            <h3 class="title"><%= blog.title %></h3>
-            <p class="author">By: <%= blog.author %></p>
-            <p class="snippet"><%= blog.body.substring(0, 100) %>...</p>
-            <div class="card-footer">
-                <span>Read More</span>
-                <span class="date"><%= blog.createdAt.toLocaleDateString() %></span>
+            <% if (blog.imageUrl) { %>
+              <div class="card-image-wrapper">
+                <img src="<%= blog.imageUrl %>" alt="<%= blog.title %>" class="card-image">
+              </div>
+            <% } %>
+            <div class="card-content">
+              <h3 class="title"><%= blog.title %></h3>
+              <p class="author">By: <%= blog.author %></p>
+              <p class="snippet"><%= blog.body.substring(0, 100) %>...</p>
+              <div class="card-footer">
+                  <span>Read More</span>
+                  <span class="date"><%= blog.createdAt.toLocaleDateString() %></span>
+              </div>
             </div>
           </a>
         <% }) %>
