@@ -1,9 +1,1 @@
-<h1>Blog Posts</h1>
-<a href="/new" class="btn btn-outline-dark mb-3">+ New Post</a>
-<ul class="list-group">
-  <% posts.forEach(post => { %>
-    <li class="list-group-item">
-      <a href="/post/<%= post._id %>"><%= post.title %></a>
-    </li>
-  <% }) %>
-</ul>
+<!DOCTYPE html><html lang="zh-CN"><%- include('./partials/header.ejs') %><body><%- include('./partials/nav.ejs') %><div class="blogs-content"><h2><%= title %></h2><% if (blogs.length > 0) { blogs.forEach(blog => { %><a class="single" href="/blogs/<%= blog._id %>"><h3 class="title"><%= blog.title %></h3><p class="author">作者: <%= blog.author %></p></a><% }) } else { %><p>还没有博客...</p><% } %></div><%- include('./partials/footer.ejs') %></body></html>

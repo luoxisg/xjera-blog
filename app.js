@@ -1,31 +1,25 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const path = require('path');
-const blogRoutes = require('./routes/blog');
-const expressLayouts = require('express-ejs-layouts');
+const methodOverride = require('method-override');
+const blogRoutes = require('./routes/blogRoutes');
 
 const app = express();
-
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => {
-  console.log('✅ Connected to MongoDB');
-}).catch(err => {
-  console.error('❌ MongoDB connection error:', err);
-});
-
-app.use(expressLayouts);
-app.set('layout', 'layout');
+const dbURI = process.env.MONGO_URI;
+mongoose.connect(dbURI)
+  .then(() => {
+    const port = process.env.PORT || 3000;
+    app.listen(port, () => {
+      console.log(`数据库连接成功，服务器正在监听端口 ${port}`);
+    });
+  })
+  .catch(err => console.log(err));
 
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
+app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method'));
 
-app.use('/', blogRoutes);
-
-app.listen(3000, () => {
-  console.log('Xjera Blog running at http://localhost:3000');
-});
+app.get('/', (req, res) => res.redirect('/blogs'));
+app.use('/blogs', blogRoutes);
+app.use((req, res) => res.status(404).render('404', { title: '404 - 页面未找到' }));
