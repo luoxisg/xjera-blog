@@ -5,7 +5,7 @@ const methodOverride = require('method-override');
 const blogRoutes = require('./routes/blogRoutes');
 
 const app = express();
-const dbURI = process.env.MONGO_URI;
+const dbURI = process.env.MONGODB_URI;
 mongoose.connect(dbURI)
   .then(() => {
     const port = process.env.PORT || 3000;
