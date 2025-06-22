@@ -8,7 +8,7 @@ const blogRoutes = require('./routes/blogRoutes');
 const app = express();
 
 // Connect to MongoDB
-const dbURI = process.env.MONGO_URI;
+const dbURI = process.env.MONGODB_URI;
 mongoose.connect(dbURI)
   .then((result) => {
     // Listen for requests after db connection is complete
