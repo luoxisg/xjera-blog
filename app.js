@@ -21,3 +21,8 @@ app.use('/', blogRoutes);
 app.listen(3000, () => {
   console.log('Xjera Blog running at http://localhost:3000');
 });
+const mongoose = require('mongoose');
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
