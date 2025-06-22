@@ -10,6 +10,8 @@
       <input type="text" id="title" name="title" value="<%= blog.title %>" required>
       <label for="author">Author:</label>
       <input type="text" id="author" name="author" value="<%= blog.author %>" required>
+      <label for="imageUrl">Image URL:</label>
+      <input type="text" id="imageUrl" name="imageUrl" value="<%= blog.imageUrl || '' %>">
       <label for="body">Blog body:</label>
       <textarea id="body" name="body" required rows="10"><%= blog.body %></textarea>
       <button type="submit" class="btn">Update</button>
@@ -18,3 +20,4 @@
   <%- include('./partials/footer.ejs') %>
 </body>
 </html>
+
